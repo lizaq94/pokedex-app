@@ -22,6 +22,16 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -39,5 +49,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^8.12.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "prettier": "2.6.1"
   }
 }
