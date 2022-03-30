@@ -1,11 +1,11 @@
 import { createContext, useState } from 'react';
-import { Pokemon } from '../../types/types';
+import { Pokemon } from '../types/types';
 
 type AppContextType = {
   numberOfVisiblePokemons: number;
   pokemons: Pokemon[] | [];
   setNumberOfVisiblePokemons: (numberOfVisiblePokemons: number) => void;
-  setPokemons: (pokemons: Pokemon[]) => void;
+  setPokemons: (pokemons: (existingPokemons: Pokemon[]) => any[]) => void;
 };
 
 export const AppContext = createContext<AppContextType>({

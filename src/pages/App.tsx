@@ -1,60 +1,70 @@
 import React, { useState, useEffect, useContext } from 'react';
-import styled from 'styled-components';
-import List from '../components/molecules/List/List';
-import { AppContext } from '../components/context/AppContext';
+import { Wrapper, Tittle } from './App.styled';
+import { AppContext } from '../context/AppContext';
+import PokemonsTable from '../components/organism/PokemonsTable/PokemonsTable';
+import { Button } from '../components/atoms/Button/Button';
+
+const INITIAL_FETCH_URL = 'https://pokeapi.co/api/v2/pokemon?limit=20&offset=0';
+
+const fetchPokemons = async (fetchUrl: string) => {
+  const response = await fetch(fetchUrl);
+  if (!response)
+    return {
+      pokemons: [],
+      next: null,
+    };
+  const { results, next } = await response.json();
+
+  return { results, next };
+};
 
 const App = () => {
-  const {
-    pokemons,
-    numberOfVisiblePokemons,
-    setPokemons,
-    setNumberOfVisiblePokemons,
-  } = useContext(AppContext);
+  const { pokemons, setPokemons } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const totalNumberOfPokemons = 898;
+  const [fetchUrl, setfetchUrl] = useState<string>(INITIAL_FETCH_URL);
 
-  const getPokemonById = async (id: number) => {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+  const getPokemonDetails = async (url: string) => {
+    const response = await fetch(url);
     if (!response) return;
     const { name, types, sprites, height, weight } = await response.json();
 
     return { name, types, sprite: sprites.front_default, height, weight };
   };
 
-  const getAllPokemons = async (numberOfPokemons: number) => {
-    setIsLoading(true);
-    const pokemonsArray = [];
-    for (let i = 1; i <= numberOfPokemons; i++) {
-      const pokemon = await getPokemonById(i);
-      if (pokemon) {
-        pokemonsArray.push(pokemon);
-      }
+  const getPokemonsWithDetails = async () => {
+    if (!pokemons.length) {
+      setIsLoading(true);
     }
-    setPokemons(pokemonsArray);
+
+    const { results, next } = await fetchPokemons(fetchUrl);
+
+    const pokemonDetailsPromisesMap = results.map(
+      (r: { name: string; url: string }) => getPokemonDetails(r.url)
+    );
+
+    const pokemonsWithDetails = await Promise.all(pokemonDetailsPromisesMap);
+    setIsLoading(true);
+    setPokemons((existingPokemons) => [
+      ...existingPokemons,
+      ...pokemonsWithDetails,
+    ]);
+    setfetchUrl(next);
     setIsLoading(false);
-  };
-  const loadMore = () => {
-    setNumberOfVisiblePokemons(numberOfVisiblePokemons + 20);
   };
 
   useEffect(() => {
-    getAllPokemons(totalNumberOfPokemons)
-      .then(() => console.log('The data has been downloaded'))
-      .catch((e) => console.error(e));
+    getPokemonsWithDetails().catch((e) => console.error(e));
   }, []);
-
+  console.log('KAMIL fetchUrl:', fetchUrl);
   return (
     <Wrapper>
-      <h1>Pokedex app</h1>
-      {isLoading ? <h1>Loading...</h1> : <List listItems={pokemons} />}
-      <button onClick={loadMore}>Load More</button>
+      <Tittle>Pokedex app</Tittle>
+      {isLoading ? <h1>Loading...</h1> : <PokemonsTable pokemons={pokemons} />}
+      {fetchUrl ? (
+        <Button onClick={getPokemonsWithDetails}>Load more</Button>
+      ) : null}
     </Wrapper>
   );
 };
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 
 export default App;

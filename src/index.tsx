@@ -1,19 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './pages/App';
-import { ThemeProvider } from 'styled-components';
-import { GlobalStyle } from './assets/styles/globalSyle';
-import { theme } from './assets/styles/theme';
-import { AppContextProvider } from './components/context/AppContext';
+import AppProviders from './providers/AppProviders';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppContextProvider>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
-    </AppContextProvider>
+    <AppProviders>
+      <App />
+    </AppProviders>
   </React.StrictMode>,
   document.getElementById('root')
 );
