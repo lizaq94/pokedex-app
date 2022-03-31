@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react';
 import { PokemonWithDetails } from '../types/types';
 
-type AppContextType = {
+export type AppContextType = {
   inputSearch: string;
   pokemons: PokemonWithDetails[];
   selectedValue: string;

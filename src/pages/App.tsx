@@ -3,7 +3,7 @@ import { Wrapper, Tittle, ErrorMessage } from './App.styled';
 import { AppContext } from '../context/AppContext';
 import PokemonsTable from '../components/organism/PokemonsTable/PokemonsTable';
 import { Button } from '../components/atoms/Button/Button';
-import { fetchPokemons, fetchPokemonDetails } from '../fetchers';
+import { fetchPokemons, fetchPokemonDetails } from '../helpers/fetchers';
 import { PokemonWithDetails } from '../types/types';
 
 const INITIAL_FETCH_URL = 'https://pokeapi.co/api/v2/pokemon?limit=20&offset=0';

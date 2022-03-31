@@ -2,7 +2,7 @@ import {
   PokemonGetAllApiResponse,
   PokemonWithDetails,
   PokemonWithDetailsApiResponse,
-} from './types/types';
+} from '../types/types';
 
 export const fetchData = async <T extends object>(
   fetchUrl: string

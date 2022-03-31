@@ -5,12 +5,11 @@ import PokemonsTableRow from '../../molecules/TableRow/PokemonsTableRow';
 import { AppContext } from '../../../context/AppContext';
 import styled from 'styled-components';
 import Select from '../../atoms/Select/Select';
-import { getPokemonsTypes } from '../../../fetchers';
+import { getPokemonsTypes } from '../../../helpers/fetchers';
 
 const PokemonsTable: FC = () => {
   const { pokemons, inputSearch, selectedValue, setInputSearch } =
     useContext(AppContext);
-
   return (
     <>
       <Form>
