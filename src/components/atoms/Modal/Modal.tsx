@@ -10,11 +10,11 @@ import {
   ElementItem,
   Image,
 } from './Modal.styled';
-import { Pokemon } from '../../../types/types';
+import { PokemonWithDetails } from '../../../types/types';
 import noImage from '../../../assets/images/noImage.png';
 
 type ModalProps = {
-  pokemon: Pokemon;
+  pokemon: PokemonWithDetails;
 };
 
 const Modal = ({ pokemon }: ModalProps) => {

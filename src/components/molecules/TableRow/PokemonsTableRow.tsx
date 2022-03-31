@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Pokemon } from '../../../types/types';
+import { PokemonWithDetails } from '../../../types/types';
 import { Tr, Td } from '../../atoms/TableElements/TableElements';
 import styled from 'styled-components';
 import Modal from '../../atoms/Modal/Modal';
 import noImage from '../../../assets/images/noImage.png';
 
 type PokemonsTableRowProps = {
-  pokemon: Pokemon;
+  pokemon: PokemonWithDetails;
 };
 const PokemonsTableRow = ({ pokemon }: PokemonsTableRowProps) => {
   const [isOpenModal, setIsOpenModal] = useState(false);

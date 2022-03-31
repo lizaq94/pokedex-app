@@ -1,9 +1,11 @@
 import { createContext, useState } from 'react';
-import { Pokemon } from '../types/types';
+import { PokemonWithDetails } from '../types/types';
 
 type AppContextType = {
-  pokemons: Pokemon[] | [];
-  setPokemons: (pokemons: (existingPokemons: Pokemon[]) => any[]) => void;
+  pokemons: PokemonWithDetails[];
+  setPokemons: (
+    pokemons: (existingPokemons: PokemonWithDetails[]) => PokemonWithDetails[]
+  ) => void;
 };
 
 export const AppContext = createContext<AppContextType>({
@@ -14,7 +16,7 @@ export const AppContext = createContext<AppContextType>({
 export const AppContextProvider = ({
   children,
 }: JSX.ElementChildrenAttribute) => {
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [pokemons, setPokemons] = useState<PokemonWithDetails[]>([]);
 
   return (
     <AppContext.Provider

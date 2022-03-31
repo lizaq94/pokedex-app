@@ -1,13 +1,11 @@
-import React from 'react';
-import { Pokemon } from '../../../types/types';
+import React, { FC, useContext } from 'react';
 import { Table, Thead, Tr, Th } from '../../atoms/TableElements/TableElements';
 import PokemonsTableRow from '../../molecules/TableRow/PokemonsTableRow';
+import { AppContext } from '../../../context/AppContext';
 
-type TableProps = {
-  pokemons: Pokemon[];
-};
+const PokemonsTable: FC = () => {
+  const { pokemons } = useContext(AppContext);
 
-const PokemonsTable = ({ pokemons }: TableProps) => {
   return (
     <Table>
       <Thead>
