@@ -40,3 +40,13 @@ export const fetchPokemonDetails = async (
 
   return { name, types, sprite: sprites.front_default, height, weight };
 };
+
+export const getPokemonsTypes = (
+  pokemonsArray: PokemonWithDetails[]
+): string[] => {
+  const types = pokemonsArray.map((pokemon) => {
+    return pokemon.types.map((t) => [t.type.name]);
+  });
+  const flatTypes = types.flat(2);
+  return Array.from(new Set(flatTypes));
+};

@@ -19,7 +19,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
   ;
   }
   
-  input {
+  input, select, input::placeholder {
     color: inherit;
   }
 `;

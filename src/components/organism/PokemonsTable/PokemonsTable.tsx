@@ -1,11 +1,15 @@
 import React, { FC, useContext } from 'react';
 import { Table, Thead, Tr, Th } from '../../atoms/TableElements/TableElements';
+import { Input } from '../../atoms/Input/Input';
 import PokemonsTableRow from '../../molecules/TableRow/PokemonsTableRow';
 import { AppContext } from '../../../context/AppContext';
 import styled from 'styled-components';
+import Select from '../../atoms/Select/Select';
+import { getPokemonsTypes } from '../../../fetchers';
 
 const PokemonsTable: FC = () => {
-  const { pokemons, inputSearch, setInputSearch } = useContext(AppContext);
+  const { pokemons, inputSearch, selectedValue, setInputSearch } =
+    useContext(AppContext);
 
   return (
     <>
@@ -15,11 +19,7 @@ const PokemonsTable: FC = () => {
           placeholder='Search...'
           onChange={(e) => setInputSearch(e.target.value)}
         />
-        <Select defaultValue='Alll'>
-          <option>option1</option>
-          <option>option2</option>
-          <option>option3</option>
-        </Select>
+        <Select options={getPokemonsTypes(pokemons)} />
       </Form>
       <Table>
         <Thead>
@@ -30,10 +30,13 @@ const PokemonsTable: FC = () => {
         </Thead>
         <tbody>
           {pokemons
+            .filter((p) =>
+              p.name.toLowerCase().includes(inputSearch.toLowerCase())
+            )
             .filter(
-              (p) =>
-                p.name === '' ||
-                p.name.toLowerCase().includes(inputSearch.toLowerCase())
+              (pk) =>
+                pk.types.findIndex((t) => t.type.name === selectedValue) !==
+                  -1 || selectedValue === ''
             )
             .map((pokemon) => (
               <PokemonsTableRow key={pokemon.name} pokemon={pokemon} />
@@ -49,25 +52,6 @@ const Form = styled.form`
   display: flex;
   justify-content: center;
   padding: 2rem;
-`;
-
-const Input = styled.input`
-  margin-right: 1rem;
-  padding: 0.5rem;
-  border: 1px solid ${({ theme }) => theme.borderColor};
-  border-radius: 0.5rem;
-  background-color: ${({ theme }) => theme.tableColor};
-
-  &:focus {
-    outline-color: ${({ theme }) => theme.fontColor};
-  }
-`;
-
-const Select = styled.select`
-  border: 1px solid ${({ theme }) => theme.borderColor};
-  border-radius: 0.5rem;
-  padding: 0 1rem;
-  background-color: ${({ theme }) => theme.tableColor};
 `;
 
 export default PokemonsTable;
