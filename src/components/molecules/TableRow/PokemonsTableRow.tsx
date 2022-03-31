@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { PokemonWithDetails } from '../../../types/types';
 import { Tr, Td } from '../../atoms/TableElements/TableElements';
-import styled from 'styled-components';
-import Modal from '../../atoms/Modal/Modal';
+import {
+  StyledTr,
+  StyledTd,
+  TableNameColumn,
+  Name,
+  Type,
+} from './PokemonsTableRowstyled';
 import noImage from '../../../assets/images/noImage.png';
 
 type PokemonsTableRowProps = {
@@ -19,7 +24,7 @@ const PokemonsTableRow = ({ pokemon }: PokemonsTableRowProps) => {
           if (isOpenModal) setIsOpenModal(false);
         }}
       >
-        <Td>
+        <Td isOpen={isOpenModal}>
           <TableNameColumn>
             {pokemon.sprite ? (
               <img src={pokemon.sprite} alt={`${pokemon.name} image`} />
@@ -30,30 +35,27 @@ const PokemonsTableRow = ({ pokemon }: PokemonsTableRowProps) => {
             <Name>{pokemon.name}</Name>
           </TableNameColumn>
         </Td>
-        <Td>
+        <Td isOpen={isOpenModal}>
           {pokemon.types.map((type) => (
             <Type key={type.slot}>{type.type.name}</Type>
           ))}
         </Td>
-        {isOpenModal && <Modal pokemon={pokemon} />}
       </StyledTr>
+      <Tr>
+        {isOpenModal && (
+          <StyledTd colSpan={2}>
+            <div>
+              <span>Weight:</span>
+              {pokemon.weight / 10} kg
+            </div>
+            <div>
+              <span>Height:</span> {pokemon.height / 10} m
+            </div>
+          </StyledTd>
+        )}
+      </Tr>
     </>
   );
 };
-const StyledTr = styled(Tr)`
-  position: relative;
-`;
-const TableNameColumn = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Name = styled.div`
-  padding-left: 1rem;
-`;
-
-const Type = styled.div`
-  padding-bottom: 0.5rem;
-`;
 
 export default PokemonsTableRow;

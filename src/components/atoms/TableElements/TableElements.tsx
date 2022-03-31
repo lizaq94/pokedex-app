@@ -43,9 +43,10 @@ export const Tr = styled.tr`
 export const Th = styled.th`
   font-weight: normal;
 `;
-export const Td = styled.td`
+export const Td = styled.td<{ isOpen?: boolean }>`
   background-color: ${({ theme }) => theme.backgrounColor};
-  border-bottom: 1px solid ${({ theme }) => theme.borderColor};
+  border-bottom: ${({ isOpen, theme }) =>
+    isOpen ? 0 : `1px solid ${theme.borderColor}`};
   transition: background-color 0.1s ease-out;
   cursor: pointer;
   } 
