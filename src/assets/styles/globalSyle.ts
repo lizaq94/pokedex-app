@@ -18,4 +18,8 @@ export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     color: ${({ theme }) => theme.fontColor};
   ;
   }
+  
+  input {
+    color: inherit;
+  }
 `;

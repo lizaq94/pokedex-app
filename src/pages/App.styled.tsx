@@ -15,3 +15,7 @@ export const Tittle = styled.h1`
     }
   }
 `;
+
+export const ErrorMessage = styled.h2`
+  color: red;
+`;
