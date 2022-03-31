@@ -3,7 +3,7 @@ import { lightTheme } from './theme';
 
 type ThemeType = typeof lightTheme;
 export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+ 
   *, *::before, *::after {
     box-sizing: border-box;
   }
